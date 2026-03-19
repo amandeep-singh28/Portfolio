@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import (
@@ -8,7 +9,28 @@ from .models import (
 )
 
 
+# 🔥 AUTO SETUP (TEMPORARY)
+def setup_data():
+    # Create admin
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@gmail.com', 'admin123')
+
+    # Create profile (only if empty)
+    if not Profile.objects.exists():
+        Profile.objects.create(
+            name="Amandeep Singh",
+            title="Aspiring Data Scientist",
+            bio="Passionate about data, ML, and building impactful projects.",
+            email="amandeep87557@gmail.com",
+            phone="8923337768",
+            location="Punjab, India",
+            cgpa="8.1"
+        )
+
+
 def index(request):
+    setup_data()   # 🔥 IMPORTANT (temporary)
+
     profile = Profile.objects.first()
     skill_categories = SkillCategory.objects.prefetch_related('skills').all()
     projects = Project.objects.all()
@@ -28,6 +50,7 @@ def index(request):
         'achievements': achievements,
         'open_source': open_source,
     }
+
     return render(request, 'main/index.html', context)
 
 
@@ -44,13 +67,6 @@ def contact(request):
                 message=message
             )
 
-        # You can configure Django email settings and enable this
-        # send_mail(
-        #     subject=f'Portfolio Contact: {name}',
-        #     message=f'From: {email}\n\n{message}',
-        #     from_email=settings.DEFAULT_FROM_EMAIL,
-        #     recipient_list=['amandeep87557@gmail.com'],
-        # )
-
         return JsonResponse({'status': 'success', 'message': 'Message sent!'})
+
     return JsonResponse({'status': 'error'}, status=400)
