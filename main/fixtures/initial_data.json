@@ -1,0 +1,297 @@
+[
+  {
+    "model": "main.profile",
+    "pk": 1,
+    "fields": {
+      "name": "Amandeep Singh",
+      "title": "CSE Student | Data Science & ML Enthusiast",
+      "bio": "A Computer Science Engineering student at Lovely Professional University with a passion for data science, machine learning, and building meaningful data-driven solutions. I enjoy turning raw data into actionable insights through analytical thinking and clean code.",
+      "email": "amandeep87557@gmail.com",
+      "phone": "+91-8923337768",
+      "location": "Phagwara, Punjab",
+      "github": "https://github.com/amandeep-singh28",
+      "linkedin": "https://www.linkedin.com/in/amandeepsingh32",
+      "resume": "",
+      "profile_photo": "",
+      "cgpa": "8.15",
+      "career_goal": "Aspiring Data Scientist and ML Engineer looking to leverage Python, machine learning, and data visualization to solve real-world problems and drive impactful decisions."
+    }
+  },
+  {
+    "model": "main.skillcategory",
+    "pk": 1,
+    "fields": { "name": "Languages", "icon": "💻", "order": 1 }
+  },
+  {
+    "model": "main.skillcategory",
+    "pk": 2,
+    "fields": { "name": "Frameworks & Libraries", "icon": "⚙️", "order": 2 }
+  },
+  {
+    "model": "main.skillcategory",
+    "pk": 3,
+    "fields": { "name": "Tools & Platforms", "icon": "🛠️", "order": 3 }
+  },
+  {
+    "model": "main.skillcategory",
+    "pk": 4,
+    "fields": { "name": "Soft Skills", "icon": "🤝", "order": 4 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 1,
+    "fields": { "category": 1, "name": "Python", "order": 1 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 2,
+    "fields": { "category": 1, "name": "C", "order": 2 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 3,
+    "fields": { "category": 1, "name": "C++", "order": 3 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 4,
+    "fields": { "category": 1, "name": "Java", "order": 4 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 5,
+    "fields": { "category": 1, "name": "SQL", "order": 5 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 6,
+    "fields": { "category": 2, "name": "Scikit-learn", "order": 1 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 7,
+    "fields": { "category": 2, "name": "Pandas", "order": 2 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 8,
+    "fields": { "category": 2, "name": "NumPy", "order": 3 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 9,
+    "fields": { "category": 2, "name": "Matplotlib", "order": 4 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 10,
+    "fields": { "category": 2, "name": "Seaborn", "order": 5 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 11,
+    "fields": { "category": 2, "name": "Imbalanced-Learn", "order": 6 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 12,
+    "fields": { "category": 3, "name": "Microsoft Power BI", "order": 1 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 13,
+    "fields": { "category": 3, "name": "Microsoft Excel", "order": 2 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 14,
+    "fields": { "category": 3, "name": "GitHub", "order": 3 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 15,
+    "fields": { "category": 3, "name": "MySQL", "order": 4 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 16,
+    "fields": { "category": 3, "name": "VS Code", "order": 5 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 17,
+    "fields": { "category": 4, "name": "Analytical Thinking", "order": 1 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 18,
+    "fields": { "category": 4, "name": "Leadership", "order": 2 }
+  },
+  {
+    "model": "main.skill",
+    "pk": 19,
+    "fields": { "category": 4, "name": "Teamwork", "order": 3 }
+  },
+  {
+    "model": "main.project",
+    "pk": 1,
+    "fields": {
+      "title": "Bank Customer Churn Prediction",
+      "description": "Developed an end-to-end machine learning pipeline to analyze and predict bank customer churn behavior. Applied class imbalance handling techniques and performed detailed model evaluation to improve recall. Implemented and optimized an XGBoost model to improve customer retention outcomes.",
+      "tech_stack": "Python, Pandas, NumPy, Scikit-learn, Imbalanced-Learn, Matplotlib",
+      "github_link": "https://github.com/amandeep-singh28",
+      "live_link": "",
+      "image": "",
+      "start_date": "Oct 2025",
+      "end_date": "Nov 2025",
+      "featured": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 2,
+    "fields": {
+      "title": "Air Pollution Analytics & Visualization Dashboard",
+      "description": "Analyzed nationwide air quality datasets to identify pollution patterns and derive AQI-based actionable insights. Structured dimensional data models using Power Query and DAX to enable scalable pollution analysis. Visualized pollution levels and AQI categories through an interactive Power BI dashboard with dynamic filters.",
+      "tech_stack": "Microsoft Power BI, Power Query, DAX",
+      "github_link": "https://github.com/amandeep-singh28",
+      "live_link": "",
+      "image": "",
+      "start_date": "Oct 2025",
+      "end_date": "Nov 2025",
+      "featured": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 3,
+    "fields": {
+      "title": "Trending Movies Data Analysis & Popularity Prediction",
+      "description": "Analyzed movie metadata and audience metrics to understand trends and predict popularity. Performed data preprocessing, exploratory analysis, and dashboard creation using Python and Power BI. Delivered an interactive analytics dashboard and classification model to identify high and low popularity movies.",
+      "tech_stack": "Python, Pandas, MySQL, Microsoft Power BI, Matplotlib, Seaborn, Scikit-learn",
+      "github_link": "https://github.com/amandeep-singh28",
+      "live_link": "",
+      "image": "",
+      "start_date": "Jun 2025",
+      "end_date": "Jul 2025",
+      "featured": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 4,
+    "fields": {
+      "title": "SQLytics Sales Dashboard",
+      "description": "Centered on analyzing Superstore sales data to uncover business trends and performance insights. Handled data cleaning, SQL querying, and interactive dashboard development using Excel and Power Pivot. Provided clear sales performance insights and KPI visibility through a dynamic, SQL-driven dashboard.",
+      "tech_stack": "Python, Pandas, MySQL, Microsoft Excel",
+      "github_link": "https://github.com/amandeep-singh28",
+      "live_link": "",
+      "image": "",
+      "start_date": "May 2025",
+      "end_date": "Jun 2025",
+      "featured": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "main.education",
+    "pk": 1,
+    "fields": {
+      "institution": "Lovely Professional University",
+      "degree": "Bachelor of Technology – Computer Science and Engineering",
+      "location": "Phagwara, Punjab",
+      "duration": "Aug 2023 – Present",
+      "score": "8.15",
+      "score_label": "CGPA",
+      "relevant_courses": "Data Structures & Algorithms, Operating Systems, DBMS, Computer Networks, Machine Learning",
+      "order": 1
+    }
+  },
+  {
+    "model": "main.education",
+    "pk": 2,
+    "fields": {
+      "institution": "St. Mary's Senior Secondary School",
+      "degree": "Intermediate (12th)",
+      "location": "Haridwar, Uttarakhand",
+      "duration": "Apr 2022 – Mar 2023",
+      "score": "77.2%",
+      "score_label": "Percentage",
+      "relevant_courses": "",
+      "order": 2
+    }
+  },
+  {
+    "model": "main.education",
+    "pk": 3,
+    "fields": {
+      "institution": "St. Mary's Senior Secondary School",
+      "degree": "Matriculation (10th)",
+      "location": "Haridwar, Uttarakhand",
+      "duration": "Apr 2020 – Mar 2021",
+      "score": "80.6%",
+      "score_label": "Percentage",
+      "relevant_courses": "",
+      "order": 3
+    }
+  },
+  {
+    "model": "main.certificate",
+    "pk": 1,
+    "fields": {
+      "name": "Data Science Using Python",
+      "platform": "Lovely Professional University",
+      "date": "Jun 2025 – Jul 2025",
+      "domain": "Data Science, ML, Power BI",
+      "link": "",
+      "order": 1
+    }
+  },
+  {
+    "model": "main.certificate",
+    "pk": 2,
+    "fields": {
+      "name": "Cloud Computing",
+      "platform": "NPTEL",
+      "date": "Apr 2025",
+      "domain": "Cloud",
+      "link": "",
+      "order": 2
+    }
+  },
+  {
+    "model": "main.certificate",
+    "pk": 3,
+    "fields": {
+      "name": "Decoding Data Science with Excel and Tableau",
+      "platform": "CSE Pathshala",
+      "date": "Mar 2024",
+      "domain": "Data Science, Excel, Tableau",
+      "link": "",
+      "order": 3
+    }
+  },
+  {
+    "model": "main.achievement",
+    "pk": 1,
+    "fields": {
+      "title": "Filed an Intellectual Property Rights patent for a kinetic energy harvesting wireless earbud system.",
+      "date": "Apr 2025",
+      "icon": "💡",
+      "order": 1
+    }
+  },
+  {
+    "model": "main.achievement",
+    "pk": 2,
+    "fields": {
+      "title": "Earned a 4-star rating in SQL and a 3-star rating in Python on HackerRank.",
+      "date": "Mar 2025",
+      "icon": "⭐",
+      "order": 2
+    }
+  }
+]
