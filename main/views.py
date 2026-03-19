@@ -29,7 +29,7 @@ def setup_data():
 
 
 def index(request):
-    setup_data()   # 🔥 IMPORTANT (temporary)
+    # setup_data()   # 🔥 IMPORTANT (temporary)
 
     profile = Profile.objects.first()
     skill_categories = SkillCategory.objects.prefetch_related('skills').all()
