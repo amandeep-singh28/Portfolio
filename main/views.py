@@ -8,6 +8,7 @@ from .models import (
     Profile, SkillCategory, Project, Experience,
     Education, Certificate, Achievement, OpenSource, ContactMessage
 )
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -33,7 +34,7 @@ def index(request):
 
     return render(request, 'main/index.html', context)
 
-
+@csrf_exempt
 def contact(request):
     if request.method == 'POST':
         name = request.POST.get('name', '')
