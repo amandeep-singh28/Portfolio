@@ -296,6 +296,21 @@ document.querySelectorAll('.project-card').forEach(card => {
 });
 
 // ─── CONTACT FORM (🔥 FIXED) ───
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 const form = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
@@ -309,9 +324,13 @@ if (form) {
     btn.disabled = true;
 
     try {
+      const csrftoken = getCookie('csrftoken');
       const res = await fetch('/contact/', {
         method: 'POST',
-        body: new FormData(form)
+        body: new FormData(form),
+        headers: {
+          'X-CSRFToken': csrftoken
+        }
       });
 
       const json = await res.json();
