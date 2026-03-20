@@ -69,16 +69,16 @@ def contact(request):
                 message=message
             )
 
-            # 2. Send Email Notification via FormSubmit.co (Bypasses Render SMTP Block)
+            # 2. Send Email Notification via Django SMTP
             try:
-                import requests
                 target_email = os.environ.get('CONTACT_EMAIL', settings.EMAIL_HOST_USER)
-                requests.post(f"https://formsubmit.co/ajax/{target_email}", data={
-                    "_subject": f"New Portfolio Message from {name}!",
-                    "name": name,
-                    "email": email,
-                    "message": message,
-                })
+                send_mail(
+                    subject=f"New Portfolio Message from {name}!",
+                    message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
+                    from_email=settings.EMAIL_HOST_USER, # Must match your App Password email
+                    recipient_list=[target_email], # Your receiving email
+                    fail_silently=False,
+                )
             except Exception as e:
                 print(f"Failed to send email: {e}")
 
