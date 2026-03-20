@@ -325,7 +325,7 @@ if (form) {
 
     try {
       const csrftoken = getCookie('csrftoken');
-      const res = await fetch('/contact/', {
+      const res = await fetch('/contact', {
         method: 'POST',
         body: new FormData(form),
         headers: {
