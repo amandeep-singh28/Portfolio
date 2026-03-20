@@ -30,7 +30,7 @@ function highlightNav() {
   const sections = document.querySelectorAll('section[id], header[id]');
   const links = navLinks.querySelectorAll('a');
   let currentActive = null;
-  
+
   sections.forEach(s => {
     const top = s.offsetTop - 100;
     if (window.scrollY >= top) {
@@ -62,7 +62,7 @@ const heroCanvas = document.getElementById('particles');
 function handleParallax() {
   const scrolled = window.scrollY;
   if (scrolled > window.innerHeight) return;
-  
+
   if (heroBg) heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
   if (heroGrid) heroGrid.style.transform = `translateY(${scrolled * 0.2}px)`;
   if (heroCanvas) heroCanvas.style.transform = `translateY(${scrolled * 0.3}px)`;
@@ -295,30 +295,44 @@ document.querySelectorAll('.project-card').forEach(card => {
   });
 });
 
-// ─── CONTACT FORM ───
+// ─── CONTACT FORM (🔥 FIXED) ───
 const form = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
 if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const btn = form.querySelector('button[type=submit]');
     const orig = btn.textContent;
-    btn.textContent = 'Sending...'; btn.disabled = true;
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
 
     try {
-      const res = await fetch('/contact/', { method: 'POST', body: new FormData(form) });
+      const res = await fetch('/contact/', {
+        method: 'POST',
+        body: new FormData(form)
+      });
+
       const json = await res.json();
+
       if (json.status === 'success') {
         formStatus.textContent = '✅ Message sent! I\'ll get back to you soon.';
         formStatus.className = 'form-status success';
         form.reset();
-      } else throw new Error();
-    } catch {
-      formStatus.textContent = '❌ Something went wrong. Please email me directly.';
+      } else {
+        // 🔥 SHOW REAL ERROR
+        formStatus.textContent = `❌ ${json.message}`;
+        formStatus.className = 'form-status error';
+      }
+
+    } catch (err) {
+      // 🔥 NETWORK ERROR
+      formStatus.textContent = `❌ Network error: ${err.message}`;
       formStatus.className = 'form-status error';
     } finally {
-      btn.textContent = orig; btn.disabled = false;
+      btn.textContent = orig;
+      btn.disabled = false;
     }
   });
 }
