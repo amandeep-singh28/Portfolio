@@ -69,19 +69,16 @@ def contact(request):
                 message=message
             )
 
-            # 2. Send Email Notification
+            # 2. Send Email Notification via FormSubmit.co (Bypasses Render SMTP Block)
             try:
-                subject = f"New Portfolio Message from {name}"
-                body = f"You received a new message from your portfolio website:\n\nName: {name}\nEmail: {email}\n\nMessage:\n{message}"
-                
-                # Send from the EMAIL_HOST_USER to the EMAIL_HOST_USER
-                send_mail(
-                    subject,
-                    body,
-                    settings.EMAIL_HOST_USER, 
-                    [os.environ.get('CONTACT_EMAIL', settings.EMAIL_HOST_USER)],
-                    fail_silently=True,
-                )
+                import requests
+                target_email = os.environ.get('CONTACT_EMAIL', settings.EMAIL_HOST_USER)
+                requests.post(f"https://formsubmit.co/ajax/{target_email}", data={
+                    "_subject": f"New Portfolio Message from {name}!",
+                    "name": name,
+                    "email": email,
+                    "message": message,
+                })
             except Exception as e:
                 print(f"Failed to send email: {e}")
 
