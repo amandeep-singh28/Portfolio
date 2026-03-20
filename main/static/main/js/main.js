@@ -344,9 +344,38 @@ if (form) {
       }
 
       if (json.status === 'success') {
-        formStatus.textContent = '✅ Message sent! I\'ll get back to you soon.';
-        formStatus.className = 'form-status success';
-        form.reset();
+        // 🔥 FRONTEND FORMSUBMIT BYPASS: Real browsers easily bypass Cloudflare!
+        try {
+          // Send the actual email
+          const fsRes = await fetch('https://formsubmit.co/ajax/amandeepsingh892333@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              name: form.querySelector('#name').value,
+              email: form.querySelector('#email').value,
+              message: form.querySelector('#message').value,
+              _subject: `New Portfolio Message from ${form.querySelector('#name').value}`
+            }) // Convert to JSON here so formsubmit processes it cleanly
+          });
+
+          if (fsRes.ok) {
+            formStatus.textContent = '✅ Message sent! I\'ll get back to you soon.';
+            formStatus.className = 'form-status success';
+            form.reset();
+          } else {
+            console.error("FormSubmit Error:", await fsRes.text());
+            throw new Error("FormSubmit rejected the request.");
+          }
+
+        } catch (fsErr) {
+          console.error(fsErr);
+          formStatus.textContent = '❌ Email service failed. The message was saved to the database, but you may want to email me directly.';
+          formStatus.className = 'form-status error';
+        }
+
       } else {
         // 🔥 SHOW REAL ERROR
         formStatus.textContent = `❌ ${json.message}`;

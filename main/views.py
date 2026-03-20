@@ -50,45 +50,14 @@ def contact(request):
                     message=message
                 )
 
-                # 2. Extract explicit target email
-                target_email = os.environ.get(
-                    'CONTACT_EMAIL',
-                    settings.EMAIL_HOST_USER
-                )
-                if not target_email:
-                    target_email = 'amandeepsingh892333@gmail.com'
-
-                # 3. Bypass Render SMTP Block using FormSubmit
-                import requests
-                response = requests.post(
-                    f"https://formsubmit.co/ajax/{target_email}",
-                    data={
-                        "_subject": f"New Portfolio Message from {name}",
-                        "name": name,
-                        "email": email,
-                        "message": message,
-                    },
-                    headers={
-                        'Accept': 'application/json'
-                    },
-                    timeout=10 # Prevents Gunicorn from timing out and crashing!
-                )
-
-                if response.status_code != 200:
-                    raise Exception(f"FormSubmit failed with status {response.status_code}: {response.text}")
-
+                # Return success! We will handle the email sending directly on the frontend
+                # to bypass FormSubmit's Cloudflare Bot Protection which blocks Python.
                 return JsonResponse({
                     'status': 'success',
-                    'message': 'Message sent successfully!'
+                    'message': 'Saved to Database!'
                 })
 
-            except requests.exceptions.Timeout:
-                return JsonResponse({
-                    'status': 'error',
-                    'message': 'Server Error: The email service timed out. Please try again.'
-                })
             except Exception as e:
-                # This will catch Database errors and FormSubmit connection errors
                 return JsonResponse({
                     'status': 'error',
                     'message': f"Server Error: {str(e)}"
