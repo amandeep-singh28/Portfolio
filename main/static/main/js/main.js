@@ -333,7 +333,15 @@ if (form) {
         }
       });
 
-      const json = await res.json();
+      // 🔥 FIXED: Parse as text first to handle HTML errors gracefully
+      const rawText = await res.text();
+      let json;
+      try {
+        json = JSON.parse(rawText);
+      } catch (parseErr) {
+        console.error("Server Error HTML:", rawText);
+        throw new Error("Server returned an invalid response. Check console for details.");
+      }
 
       if (json.status === 'success') {
         formStatus.textContent = '✅ Message sent! I\'ll get back to you soon.';
