@@ -10,28 +10,7 @@ from .models import (
 )
 
 
-# 🔥 AUTO SETUP (TEMPORARY)
-def setup_data():
-    # Create admin
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser('admin', 'admin@gmail.com', 'admin123')
-
-    # Create profile (only if empty)
-    if not Profile.objects.exists():
-        Profile.objects.create(
-            name="Amandeep Singh",
-            title="Aspiring Data Scientist",
-            bio="Passionate about data, ML, and building impactful projects.",
-            email="amandeep87557@gmail.com",
-            phone="8923337768",
-            location="Punjab, India",
-            cgpa="8.1"
-        )
-
-
 def index(request):
-    # setup_data()   # 🔥 IMPORTANT (temporary)
-
     profile = Profile.objects.first()
     skill_categories = SkillCategory.objects.prefetch_related('skills').all()
     projects = Project.objects.all()
@@ -62,26 +41,42 @@ def contact(request):
         message = request.POST.get('message', '')
 
         if name and email and message:
-            # 1. Save it to Database (Admin panel)
+            # Save to DB
             ContactMessage.objects.create(
                 name=name,
                 email=email,
                 message=message
             )
 
-            # 2. Send Email Notification via Django SMTP
             try:
-                target_email = os.environ.get('CONTACT_EMAIL', settings.EMAIL_HOST_USER)
+                # 🔥 Explicit email (no confusion)
+                target_email = os.environ.get(
+                    'CONTACT_EMAIL',
+                    settings.EMAIL_HOST_USER
+                )
+
                 send_mail(
-                    subject=f"New Portfolio Message from {name}!",
+                    subject=f"New Portfolio Message from {name}",
                     message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-                    from_email=settings.EMAIL_HOST_USER, # Must match your App Password email
-                    recipient_list=[target_email], # Your receiving email
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[target_email],
                     fail_silently=False,
                 )
-            except Exception as e:
-                print(f"Failed to send email: {e}")
 
-        return JsonResponse({'status': 'success', 'message': 'Message sent!'})
+                return JsonResponse({
+                    'status': 'success',
+                    'message': 'Message sent successfully!'
+                })
+
+            except Exception as e:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': str(e)
+                })
+
+        return JsonResponse({
+            'status': 'error',
+            'message': 'All fields are required'
+        })
 
     return JsonResponse({'status': 'error'}, status=400)
