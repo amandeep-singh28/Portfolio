@@ -1,9 +1,6 @@
-import os
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.conf import settings
 from .models import (
     Profile, SkillCategory, Project, Experience,
     Education, Certificate, Achievement, OpenSource, ContactMessage
@@ -69,21 +66,6 @@ def contact(request):
                 message=message
             )
 
-            # 2. Send Email Notification
-            try:
-                subject = f"New Portfolio Message from {name}"
-                body = f"You received a new message from your portfolio website:\n\nName: {name}\nEmail: {email}\n\nMessage:\n{message}"
-                
-                # Send from the EMAIL_HOST_USER to the EMAIL_HOST_USER
-                send_mail(
-                    subject,
-                    body,
-                    settings.EMAIL_HOST_USER, 
-                    [os.environ.get('CONTACT_EMAIL', settings.EMAIL_HOST_USER)],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Failed to send email: {e}")
 
         return JsonResponse({'status': 'success', 'message': 'Message sent!'})
 
