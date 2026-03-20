@@ -55,23 +55,40 @@ def contact(request):
                     'CONTACT_EMAIL',
                     settings.EMAIL_HOST_USER
                 )
+                if not target_email:
+                    target_email = 'amandeepsingh892333@gmail.com'
 
-                # 3. Send email via SMTP
-                send_mail(
-                    subject=f"New Portfolio Message from {name}",
-                    message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=[target_email],
-                    fail_silently=False,
+                # 3. Bypass Render SMTP Block using FormSubmit
+                import requests
+                response = requests.post(
+                    f"https://formsubmit.co/ajax/{target_email}",
+                    data={
+                        "_subject": f"New Portfolio Message from {name}",
+                        "name": name,
+                        "email": email,
+                        "message": message,
+                    },
+                    headers={
+                        'Accept': 'application/json'
+                    },
+                    timeout=10 # Prevents Gunicorn from timing out and crashing!
                 )
+
+                if response.status_code != 200:
+                    raise Exception(f"FormSubmit failed with status {response.status_code}: {response.text}")
 
                 return JsonResponse({
                     'status': 'success',
                     'message': 'Message sent successfully!'
                 })
 
+            except requests.exceptions.Timeout:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'Server Error: The email service timed out. Please try again.'
+                })
             except Exception as e:
-                # This will catch both Database errors and SMTP errors!
+                # This will catch Database errors and FormSubmit connection errors
                 return JsonResponse({
                     'status': 'error',
                     'message': f"Server Error: {str(e)}"
