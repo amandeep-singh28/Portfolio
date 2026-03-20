@@ -42,20 +42,21 @@ def contact(request):
         message = request.POST.get('message', '')
 
         if name and email and message:
-            # Save to DB
-            ContactMessage.objects.create(
-                name=name,
-                email=email,
-                message=message
-            )
-
             try:
-                # 🔥 Explicit email (no confusion)
+                # 1. Save to DB
+                ContactMessage.objects.create(
+                    name=name,
+                    email=email,
+                    message=message
+                )
+
+                # 2. Extract explicit target email
                 target_email = os.environ.get(
                     'CONTACT_EMAIL',
                     settings.EMAIL_HOST_USER
                 )
 
+                # 3. Send email via SMTP
                 send_mail(
                     subject=f"New Portfolio Message from {name}",
                     message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
@@ -70,9 +71,10 @@ def contact(request):
                 })
 
             except Exception as e:
+                # This will catch both Database errors and SMTP errors!
                 return JsonResponse({
                     'status': 'error',
-                    'message': str(e)
+                    'message': f"Server Error: {str(e)}"
                 })
 
         return JsonResponse({
