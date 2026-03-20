@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.models import User
@@ -61,11 +62,28 @@ def contact(request):
         message = request.POST.get('message', '')
 
         if name and email and message:
+            # 1. Save it to Database (Admin panel)
             ContactMessage.objects.create(
                 name=name,
                 email=email,
                 message=message
             )
+
+            # 2. Send Email Notification
+            try:
+                subject = f"New Portfolio Message from {name}"
+                body = f"You received a new message from your portfolio website:\n\nName: {name}\nEmail: {email}\n\nMessage:\n{message}"
+                
+                # Send from the EMAIL_HOST_USER to the EMAIL_HOST_USER
+                send_mail(
+                    subject,
+                    body,
+                    settings.EMAIL_HOST_USER, 
+                    [os.environ.get('CONTACT_EMAIL', settings.EMAIL_HOST_USER)],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                print(f"Failed to send email: {e}")
 
         return JsonResponse({'status': 'success', 'message': 'Message sent!'})
 
