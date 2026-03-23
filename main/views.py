@@ -5,6 +5,9 @@ from .models import (
     Profile, SkillCategory, Project, Experience,
     Education, Certificate, Achievement, OpenSource, ContactMessage
 )
+from django.http import HttpResponse
+def ping(request):
+    return HttpResponse("OK")
 
 
 # 🔥 AUTO SETUP (TEMPORARY)
