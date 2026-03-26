@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
 
 
 class Profile(models.Model):
@@ -10,7 +11,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=100, blank=True)
     github = models.URLField(blank=True)
     linkedin = models.URLField(blank=True)
-    resume = models.FileField(upload_to='resume/', blank=True)
+    resume = models.FileField(upload_to='resume/', blank=True, storage=RawMediaCloudinaryStorage())
     profile_photo = models.ImageField(upload_to='photos/', blank=True)
     cgpa = models.CharField(max_length=10, blank=True)
     career_goal = models.TextField(blank=True)
